@@ -110,3 +110,11 @@ src\grade_system.py      28      1    96%   37
 TOTAL                    28      1    96%
 =============================================================================== 20 passed in 0.12s ================================================================================
 ```
+
+---
+
+## Parte 6 — Reflexión
+
+**Diferencia entre diseñar casos antes vs programar directamente:** Diseñar la tabla de casos antes de escribir código obligó a pensar desde el punto de vista de los requerimientos y no de la implementación como hemos venido aprendiendo. Al construir la tabla identifiqué los valores límite (0.0, 5.0, 3.0) y los casos de error antes de saber cómo iba a estructurar el código, cuando uno se pone a programar directamente tiende a escribir tests que prueban lo que el código hace, no lo que el requerimiento pide y pues termina validando la implementación en lugar de validar el comportamiento que se quiere
+
+**Lo más difícil del ciclo TDD:** La mayor dificultad fue hacer el commit RED sin escribir ni una sola línea de producción pero es por la costumbre, el instinto mio es escribir aunque sea la firma del método para que el test "tenga algo que llamar" y la tentación de saltarse el paso fue más fuerte al inicio del cuarto requerimiento, cuando ya tenía la clase creada y parecía obvio cómo implementar la validación de duplicados pero entonces respetar el commit RED sin código de producción fue lo que obligó a pensar primero en el comportamiento esperado del error
