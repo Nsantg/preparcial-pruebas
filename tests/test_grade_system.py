@@ -96,3 +96,34 @@ class TestAverage:
         self.system.register_grade("Historia", "2024-1", 4.0)
         self.system.register_grade("Física", "2024-1", 5.0)
         assert self.system.get_average() == pytest.approx(4.0)
+
+class TestDuplicateGrade:
+    """REQ-4: No duplicar nota para misma materia en mismo semestre"""
+
+    def setup_method(self):
+        self.system = GradeSystem()
+
+    # TC12 - Negativo
+    def test_register_duplicate_grade_same_subject_same_semester_raises_error(self):
+        self.system.register_grade("Matemáticas", "2024-1", 4.0)
+        with pytest.raises(DuplicateGradeError):
+            self.system.register_grade("Matemáticas", "2024-1", 3.0)
+
+    # TC13 - Positivo
+    def test_register_same_subject_different_semester_is_allowed(self):
+        self.system.register_grade("Matemáticas", "2024-1", 4.0)
+        self.system.register_grade("Matemáticas", "2024-2", 3.5)
+        assert ("Matemáticas", "2024-2") in self.system.grades
+
+    # TC14 - Positivo
+    def test_register_different_subjects_same_semester_is_allowed(self):
+        self.system.register_grade("Matemáticas", "2024-1", 4.0)
+        self.system.register_grade("Historia", "2024-1", 3.5)
+        assert ("Historia", "2024-1") in self.system.grades
+
+    def test_duplicate_grade_error_message_is_descriptive(self):
+        self.system.register_grade("Matemáticas", "2024-1", 4.0)
+        with pytest.raises(DuplicateGradeError) as exc_info:
+            self.system.register_grade("Matemáticas", "2024-1", 3.0)
+        assert "Matemáticas" in str(exc_info.value)
+        assert "2024-1" in str(exc_info.value)
