@@ -15,10 +15,17 @@ class GradeSystem:
         self.grades: dict[tuple[str, str], float] = {}
 
     def register_grade(self, subject: str, semester: str, grade: float) -> None:
+        """Registra una nota para una materia en un semestre dado."""
         if not (MIN_GRADE <= grade <= MAX_GRADE):
             raise InvalidGradeError(
                 f"La nota {grade} no es válida. "
                 f"Debe estar entre {MIN_GRADE} y {MAX_GRADE}."
+            )
+        if (subject, semester) in self.grades:
+            raise DuplicateGradeError(
+                f"Ya existe una nota para '{subject}' "
+                f"en el semestre '{semester}'. "
+                f"No se puede registrar una nota duplicada."
             )
         self.grades[(subject, semester)] = grade
 
