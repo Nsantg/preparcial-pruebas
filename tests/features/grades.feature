@@ -1,4 +1,3 @@
-# language: es
 Feature: Registro de notas académicas
   Como estudiante de la Universidad Regional del Sur
   Quiero registrar mis notas por materia y semestre
