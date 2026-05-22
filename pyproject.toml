@@ -16,6 +16,7 @@ dev = [
 testpaths = ["tests"]
 pythonpath = ["."]
 bdd_features_base_dir = "tests/features"
+addopts = "--cov=src --cov-report=term-missing"
 
 [build-system]
 requires = ["hatchling"]
