@@ -23,6 +23,7 @@ class GradeSystem:
         self.grades[(subject, semester)] = grade
 
     def is_passing(self, subject: str, semester: str) -> bool:
+        """Retorna True si la nota de la materia en el semestre es >= PASSING_GRADE."""
         if (subject, semester) not in self.grades:
             raise ValueError(
                 f"No hay nota registrada para {subject} en el semestre {semester}"
