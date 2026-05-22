@@ -69,3 +69,30 @@ class TestPassingStatus:
     def test_grade_five_returns_passing(self):
         self.system.register_grade("Física", "2024-1", 5.0)
         assert self.system.is_passing("Física", "2024-1") is True
+
+class TestAverage:
+    """REQ-3: Calcular promedio de todas las notas"""
+
+    def setup_method(self):
+        self.system = GradeSystem()
+
+    # TC09 - Positivo
+    def test_average_with_no_grades_returns_zero(self):
+        assert self.system.get_average() == 0.0
+
+    # TC10 - Positivo
+    def test_average_with_single_grade_returns_that_grade(self):
+        self.system.register_grade("Matemáticas", "2024-1", 4.0)
+        assert self.system.get_average() == 4.0
+
+    # TC11 - Positivo
+    def test_average_with_multiple_grades_returns_correct_average(self):
+        self.system.register_grade("Matemáticas", "2024-1", 4.0)
+        self.system.register_grade("Historia", "2024-1", 2.0)
+        assert self.system.get_average() == 3.0
+
+    def test_average_with_three_grades_returns_correct_average(self):
+        self.system.register_grade("Matemáticas", "2024-1", 3.0)
+        self.system.register_grade("Historia", "2024-1", 4.0)
+        self.system.register_grade("Física", "2024-1", 5.0)
+        assert self.system.get_average() == pytest.approx(4.0)
