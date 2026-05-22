@@ -1,3 +1,7 @@
+MIN_GRADE = 0.0
+MAX_GRADE = 5.0
+PASSING_GRADE = 3.0
+
 class InvalidGradeError(Exception):
     pass
 
@@ -11,8 +15,9 @@ class GradeSystem:
         self.grades: dict[tuple[str, str], float] = {}
 
     def register_grade(self, subject: str, semester: str, grade: float) -> None:
-        if grade < 0.0 or grade > 5.0:
+        if not (MIN_GRADE <= grade <= MAX_GRADE):
             raise InvalidGradeError(
-                f"Nota inválida: {grade}. Debe estar entre 0.0 y 5.0"
+                f"La nota {grade} no es válida. "
+                f"Debe estar entre {MIN_GRADE} y {MAX_GRADE}."
             )
         self.grades[(subject, semester)] = grade
