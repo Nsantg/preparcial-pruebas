@@ -61,3 +61,52 @@
 | TC12 | REQ-4 | Error al duplicar nota misma materia mismo semestre | Nota 4.0 en Matemáticas 2024-1 | materia="Matemáticas", semestre="2024-1", nota=3.0 | 1. Intentar `register_grade("Matemáticas","2024-1",3.0)` | Se lanza `DuplicateGradeError` | Negativo |
 | TC13 | REQ-4 | Permite misma materia en semestre diferente | Nota 4.0 en Matemáticas 2024-1 | materia="Matemáticas", semestre="2024-2", nota=3.5 | 1. Llamar `register_grade("Matemáticas","2024-2",3.5)` | Nota registrada exitosamente | Positivo |
 | TC14 | REQ-4 | Permite materia diferente en mismo semestre | Nota 4.0 en Matemáticas 2024-1 | materia="Historia", semestre="2024-1", nota=3.5 | 1. Llamar `register_grade("Historia","2024-1",3.5)` | Nota registrada exitosamente | Positivo |
+
+---
+
+## Parte 3 — Cobertura de Tests
+
+```
+ Built grade-system @ file:///C:/Users/Santi/Desktop/grade-system
+Installed 11 packages in 290ms
+=============================================================================== test session starts ===============================================================================
+platform win32 -- Python 3.13.13, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Santi\Desktop\grade-system\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Santi\Desktop\grade-system
+configfile: pyproject.toml
+testpaths: tests
+plugins: bdd-8.1.0, cov-7.1.0
+collected 20 items                                                                                                                                                                 
+
+tests/test_grade_system.py::TestRegisterGrade::test_register_valid_grade_stores_successfully PASSED                                                                          [  5%]
+tests/test_grade_system.py::TestRegisterGrade::test_register_negative_grade_raises_invalid_error PASSED                                                                      [ 10%]
+tests/test_grade_system.py::TestRegisterGrade::test_register_grade_above_maximum_raises_invalid_error PASSED                                                                 [ 15%]
+tests/test_grade_system.py::TestRegisterGrade::test_register_grade_at_minimum_boundary_zero_is_valid PASSED                                                                  [ 20%]
+tests/test_grade_system.py::TestRegisterGrade::test_register_grade_at_maximum_boundary_five_is_valid PASSED                                                                  [ 25%]
+tests/test_grade_system.py::TestRegisterGrade::test_register_grade_just_below_minimum_raises_invalid_error PASSED                                                            [ 30%]
+tests/test_grade_system.py::TestRegisterGrade::test_register_grade_just_above_maximum_raises_invalid_error PASSED                                                            [ 35%]
+tests/test_grade_system.py::TestPassingStatus::test_grade_above_three_returns_passing PASSED                                                                                 [ 40%]
+tests/test_grade_system.py::TestPassingStatus::test_grade_below_three_returns_failing PASSED                                                                                 [ 45%]
+tests/test_grade_system.py::TestPassingStatus::test_grade_exactly_three_returns_passing PASSED                                                                               [ 50%]
+tests/test_grade_system.py::TestPassingStatus::test_grade_zero_returns_failing PASSED                                                                                        [ 55%]
+tests/test_grade_system.py::TestPassingStatus::test_grade_five_returns_passing PASSED                                                                                        [ 60%]
+tests/test_grade_system.py::TestAverage::test_average_with_no_grades_returns_zero PASSED                                                                                     [ 65%]
+tests/test_grade_system.py::TestAverage::test_average_with_single_grade_returns_that_grade PASSED                                                                            [ 70%]
+tests/test_grade_system.py::TestAverage::test_average_with_multiple_grades_returns_correct_average PASSED                                                                    [ 75%]
+tests/test_grade_system.py::TestAverage::test_average_with_three_grades_returns_correct_average PASSED                                                                       [ 80%]
+tests/test_grade_system.py::TestDuplicateGrade::test_register_duplicate_grade_same_subject_same_semester_raises_error PASSED                                                 [ 85%]
+tests/test_grade_system.py::TestDuplicateGrade::test_register_same_subject_different_semester_is_allowed PASSED                                                              [ 90%]
+tests/test_grade_system.py::TestDuplicateGrade::test_register_different_subjects_same_semester_is_allowed PASSED                                                             [ 95%]
+tests/test_grade_system.py::TestDuplicateGrade::test_duplicate_grade_error_message_is_descriptive PASSED                                                                     [100%]
+
+================================================================================= tests coverage ==================================================================================
+________________________________________________________________ coverage: platform win32, python 3.13.13-final-0 _________________________________________________________________
+
+Name                  Stmts   Miss  Cover   Missing
+---------------------------------------------------
+src\__init__.py           0      0   100%
+src\grade_system.py      28      1    96%   37
+---------------------------------------------------
+TOTAL                    28      1    96%
+=============================================================================== 20 passed in 0.12s ================================================================================
+```
