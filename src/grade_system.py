@@ -29,3 +29,9 @@ class GradeSystem:
                 f"No hay nota registrada para {subject} en el semestre {semester}"
             )
         return self.grades[(subject, semester)] >= PASSING_GRADE
+
+    def get_average(self) -> float:
+        """Retorna el promedio de todas las notas. Retorna 0.0 si no hay notas."""
+        if not self.grades:
+            return 0.0
+        return sum(self.grades.values()) / len(self.grades)
