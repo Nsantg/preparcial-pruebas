@@ -21,3 +21,10 @@ class GradeSystem:
                 f"Debe estar entre {MIN_GRADE} y {MAX_GRADE}."
             )
         self.grades[(subject, semester)] = grade
+
+    def is_passing(self, subject: str, semester: str) -> bool:
+        if (subject, semester) not in self.grades:
+            raise ValueError(
+                f"No hay nota registrada para {subject} en el semestre {semester}"
+            )
+        return self.grades[(subject, semester)] >= PASSING_GRADE
