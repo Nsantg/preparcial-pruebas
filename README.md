@@ -40,3 +40,24 @@
 **Pregunta 2:** Si un estudiante pierde una materia en "2024-1" y la vuelve a cursar en "2024-2", ¿el historial anterior se mantiene para el cálculo del promedio o solo cuenta la nota más reciente?
 
 *Justificación:* Esta decisión cambia radicalmente los casos de prueba del requerimiento 3 porque si el promedio solo cuenta la nota más reciente por materia necesito casos que verifiquen que notas anteriores se ignoran, si se cuentan todas, el resultado del promedio con materia repetida en semestres distintos es diferente
+
+---
+
+## Parte 2 — Casos de Prueba Formales
+
+| ID | Requerimiento | Descripción | Precondición | Datos de entrada | Pasos | Resultado esperado | Tipo |
+|---|---|---|---|---|---|---|---|
+| TC01 | REQ-1 | Registro de nota válida en rango normal | Sistema limpio | materia="Matemáticas", semestre="2024-1", nota=3.5 | 1. Llamar `register_grade("Matemáticas","2024-1",3.5)` | Nota almacenada sin error | Positivo |
+| TC02 | REQ-1 | Nota negativa rechazada | Sistema limpio | materia="Física", semestre="2024-1", nota=-1.0 | 1. Llamar `register_grade("Física","2024-1",-1.0)` | Se lanza `InvalidGradeError` | Negativo |
+| TC03 | REQ-1 | Nota mayor a 5.0 rechazada | Sistema limpio | materia="Historia", semestre="2024-1", nota=6.0 | 1. Llamar `register_grade("Historia","2024-1",6.0)` | Se lanza `InvalidGradeError` | Negativo |
+| TC04 | REQ-1 | Nota exactamente 0.0 aceptada | Sistema limpio | materia="Arte", semestre="2024-1", nota=0.0 | 1. Llamar `register_grade("Arte","2024-1",0.0)` | Nota almacenada sin error | Borde |
+| TC05 | REQ-1 | Nota exactamente 5.0 aceptada | Sistema limpio | materia="Química", semestre="2024-1", nota=5.0 | 1. Llamar `register_grade("Química","2024-1",5.0)` | Nota almacenada sin error | Borde |
+| TC06 | REQ-2 | Estudiante aprueba con nota 3.5 | Nota 3.5 en Matemáticas 2024-1 | materia="Matemáticas", semestre="2024-1" | 1. Llamar `is_passing("Matemáticas","2024-1")` | Retorna `True` | Positivo |
+| TC07 | REQ-2 | Estudiante reprueba con nota 2.9 | Nota 2.9 en Historia 2024-1 | materia="Historia", semestre="2024-1" | 1. Llamar `is_passing("Historia","2024-1")` | Retorna `False` | Negativo |
+| TC08 | REQ-2 | Nota exactamente 3.0 aprueba | Nota 3.0 en Física 2024-1 | materia="Física", semestre="2024-1" | 1. Llamar `is_passing("Física","2024-1")` | Retorna `True` | Borde |
+| TC09 | REQ-3 | Promedio sin notas es 0.0 | Sistema limpio, sin notas | Ninguno | 1. Llamar `get_average()` | Retorna `0.0` | Positivo |
+| TC10 | REQ-3 | Promedio de una sola nota | Nota 4.0 en Matemáticas 2024-1 | Ninguno | 1. Llamar `get_average()` | Retorna `4.0` | Positivo |
+| TC11 | REQ-3 | Promedio correcto con múltiples notas | Notas 4.0 y 2.0 registradas | Ninguno | 1. Llamar `get_average()` | Retorna `3.0` | Positivo |
+| TC12 | REQ-4 | Error al duplicar nota misma materia mismo semestre | Nota 4.0 en Matemáticas 2024-1 | materia="Matemáticas", semestre="2024-1", nota=3.0 | 1. Intentar `register_grade("Matemáticas","2024-1",3.0)` | Se lanza `DuplicateGradeError` | Negativo |
+| TC13 | REQ-4 | Permite misma materia en semestre diferente | Nota 4.0 en Matemáticas 2024-1 | materia="Matemáticas", semestre="2024-2", nota=3.5 | 1. Llamar `register_grade("Matemáticas","2024-2",3.5)` | Nota registrada exitosamente | Positivo |
+| TC14 | REQ-4 | Permite materia diferente en mismo semestre | Nota 4.0 en Matemáticas 2024-1 | materia="Historia", semestre="2024-1", nota=3.5 | 1. Llamar `register_grade("Historia","2024-1",3.5)` | Nota registrada exitosamente | Positivo |
